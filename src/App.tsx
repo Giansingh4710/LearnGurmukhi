@@ -1,36 +1,45 @@
 import React from "react"; // removes errors for nvim lsp
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import GurmukhiGrid from "./GurmukhiGridPage.tsx";
 import AudioQuizPage from "./AudioQuizPage.tsx";
 import NavBar from "./components/NavBar.tsx";
 
 function App() {
+  const [currentPage, setCurrentPage] = React.useState("/");
+  let DisplayComponent = LandingPage;
+  if (currentPage === "/") {
+    DisplayComponent = LandingPage;
+  } else if (currentPage === "/letters") {
+    DisplayComponent = GurmukhiGrid;
+  } else if (currentPage === "/quiz") {
+    DisplayComponent = AudioQuizPage;
+  }
+
   return (
-    <Router>
-      <NavBar />
+    <div>
+      <NavBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/letters" element={<GurmukhiGrid />} />
-          <Route path="/audio-quiz" element={<AudioQuizPage />} />
-        </Routes>
+        <DisplayComponent setCurrentPage={setCurrentPage} />
       </div>
-    </Router>
+    </div>
   );
 }
 
-function ListItem({ path, title }: { path: string; title: string }) {
+function ListItem({ onClick, title }: { onClick: () => void; title: string }) {
   return (
-    <Link
-      to={path}
+    <button
+      onClick={onClick}
       className="px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-md shadow-md hover:bg-blue-700"
     >
       {title}
-    </Link>
+    </button>
   );
 }
 
-function LandingPage() {
+function LandingPage({
+  setCurrentPage,
+}: {
+  setCurrentPage: (page: string) => void;
+}) {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-gray-50 dark:bg-gray-900">
       <header className="w-full py-6 bg-gray-100 dark:bg-gray-800 shadow-md">
@@ -43,8 +52,8 @@ function LandingPage() {
           Explore various resources and tools to help you learn Gurmukhi. Choose
           an option below to get started.
         </p>
-        <ListItem path="/letters" title="Letters" />
-        <ListItem path="/audio-quiz" title="Audio Quiz" />
+        <ListItem onClick={() => setCurrentPage("/letters")} title="Letters" />
+        <ListItem onClick={() => setCurrentPage("/quiz")} title="Audio Quiz" />
       </main>
     </div>
   );

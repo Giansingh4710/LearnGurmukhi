@@ -3,7 +3,7 @@ import GurmukhiCard from "./components/GurmukhiCard.tsx";
 import { cn } from "./utils/helpers.ts";
 import { GURMUKHI_LETTERS } from "./utils/constants.ts";
 
-const GurmukhiGrid: React.FC = () => {
+function GurmukhiGrid() {
   const [lastPlayed, setLastPlayed] = React.useState<GurmukhiLetter | null>(
     null,
   );
@@ -39,6 +39,6 @@ const GurmukhiGrid: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default GurmukhiGrid;

@@ -41,7 +41,12 @@ function AudioQuizPage() {
       <h2 className="text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-50">
         Audio Quiz
       </h2>
-      <audio src={currentLetter.audioSrc} controls autoPlay ref={audioRef} />
+      <audio
+        src={currentLetter.audioSrc}
+        controls
+        autoPlay
+        ref={audioRef}
+      />
       <details className="mt-4 text-lg text-gray-700 dark:text-gray-300">
         <summary>Transliteration</summary>
         <p>{currentLetter.transliteration}</p>

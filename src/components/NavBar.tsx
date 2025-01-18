@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
-function NavBar() {
+function NavBar({ currentPage, setCurrentPage }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -11,9 +10,12 @@ function NavBar() {
   return (
     <nav className="bg-gray-800 text-white p-4">
       <div className="flex justify-between items-center">
-        <Link to="/" className="flex items-center">
+        <button
+          onClick={() => setCurrentPage("/")}
+          className="flex items-center"
+        >
           <h1 className="text-2xl font-bold tracking-tight">Learn Gurmukhi</h1>
-        </Link>
+        </button>
         <button
           className="text-white text-2xl focus:outline-none lg:hidden"
           onClick={toggleMenu}
@@ -26,23 +28,26 @@ function NavBar() {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <ListItem path="/" title="Home" />
-        <ListItem path="/letters" title="Letters" />
-        <ListItem path="/audio-quiz" title="Audio Quiz" />
+        <ListItem onClick={() => setCurrentPage("/")} title="Home" />
+        <ListItem onClick={() => setCurrentPage("/letters")} title="Letters" />
+        <ListItem
+          onClick={() => setCurrentPage("/quiz")}
+          title="Audio Quiz"
+        />
       </ul>
     </nav>
   );
 }
 
-function ListItem({ path, title }) {
+function ListItem({ onClick, title }: { onClick: () => void; title: string }) {
   return (
     <li>
-      <Link
-        to={path}
+      <button
+        onClick={onClick}
         className="block px-4 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 rounded transition"
       >
         {title}
-      </Link>
+      </button>
     </li>
   );
 }
