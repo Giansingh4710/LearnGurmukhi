@@ -10,7 +10,7 @@ const GurmukhiGrid: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="w-full p-2 sm:p-4 md:p-6">
+      <div className="w-full p-2 py-14 sm:p-4 md:p-6">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-5 gap-2 sm:gap-3 md:gap-4">
             {GURMUKHI_LETTERS.map((item) => (
@@ -30,11 +30,9 @@ const GurmukhiGrid: React.FC = () => {
           {/* Last played indicator */}
           {lastPlayed && (
             <div className="mt-4 md:mt-6 text-center text-gray-600 dark:text-gray-300 text-sm md:text-base">
-              Last played:{" "}
-              {
-                GURMUKHI_LETTERS.find((l) => l.letter === lastPlayed.letter)
-                  ?.transliteration
-              }
+              Last played: {lastPlayed.letter}
+              <br />
+              Transliteration: {lastPlayed.transliteration}
             </div>
           )}
         </div>

@@ -29,7 +29,6 @@ function NavBar() {
         <ListItem path="/" title="Home" />
         <ListItem path="/letters" title="Letters" />
         <ListItem path="/audio-quiz" title="Audio Quiz" />
-        <ListItem path="/transliteration-quiz" title="Transliteration Quiz" />
       </ul>
     </nav>
   );

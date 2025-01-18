@@ -2,7 +2,6 @@ import React from "react"; // removes errors for nvim lsp
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import GurmukhiGrid from "./GurmukhiGridPage.tsx";
 import AudioQuizPage from "./AudioQuizPage.tsx";
-import TransliterationQuizPage from "./TransliterationQuizPage.tsx";
 import NavBar from "./components/NavBar.tsx";
 
 function App() {
@@ -14,10 +13,6 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/letters" element={<GurmukhiGrid />} />
           <Route path="/audio-quiz" element={<AudioQuizPage />} />
-          <Route
-            path="/transliteration-quiz"
-            element={<TransliterationQuizPage />}
-          />
         </Routes>
       </div>
     </Router>
@@ -50,7 +45,6 @@ function LandingPage() {
         </p>
         <ListItem path="/letters" title="Letters" />
         <ListItem path="/audio-quiz" title="Audio Quiz" />
-        <ListItem path="/transliteration-quiz" title="Transliteration Quiz" />
       </main>
     </div>
   );

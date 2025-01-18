@@ -6,7 +6,6 @@ interface GurmukhiCardProps {
   letter: string;
   audioSrc: string;
   transliteration: string;
-  description?: string;
   className?: string;
   onPlay?: () => void;
 }
@@ -15,13 +14,11 @@ const GurmukhiCard: React.FC<GurmukhiCardProps> = ({
   letter,
   audioSrc,
   transliteration,
-  description,
   className,
   onPlay,
 }) => {
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [error, setError] = React.useState(false);
-  const [showInfo, setShowInfo] = React.useState(false);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
   const playSound = async () => {
@@ -36,11 +33,6 @@ const GurmukhiCard: React.FC<GurmukhiCardProps> = ({
     }
   };
 
-  const handleAudioEnd = () => {
-    setIsPlaying(false);
-  };
-
-  // Animation variants based on state
   const cardClasses = cn(
     "relative overflow-hidden transition-all duration-300",
     "rounded-lg border border-gray-200 dark:border-gray-700",
@@ -56,21 +48,21 @@ const GurmukhiCard: React.FC<GurmukhiCardProps> = ({
       <audio
         ref={audioRef}
         src={audioSrc}
-        onEnded={handleAudioEnd}
+        onEnded={() => setIsPlaying(false)}
         onError={() => {
           setError(true);
         }}
       />
       <button
         onClick={playSound}
-        className="w-full h-full p-6 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg"
+        className="w-full h-full focus:ring-4 focus:ring-blue-500 rounded-2xl"
         disabled={error}
       >
         <div className="flex flex-col items-center justify-center h-full space-y-4">
           {/* Letter with floating animation */}
           <span
             className={cn(
-              "text-6xl font-bold text-gray-900 dark:text-white",
+              "text-5xl font-bold text-gray-900 dark:text-white",
               "transition-all duration-500 transform",
               isPlaying ? "scale-110 animate-bounce" : "hover:scale-110",
             )}
@@ -79,12 +71,7 @@ const GurmukhiCard: React.FC<GurmukhiCardProps> = ({
           </span>
 
           {/* Transliteration with fade animation */}
-          <span className="text-lg font-medium text-gray-600 dark:text-gray-300 transition-opacity duration-300">
-            {transliteration}
-          </span>
-
-          {/* Status indicators */}
-          <div className="h-6 flex items-center justify-center">
+          <div className="h-4 flex items-center justify-center max-sm:hidden">
             {error ? (
               <VolumeX className="w-5 h-5 text-red-500" />
             ) : (
@@ -95,33 +82,12 @@ const GurmukhiCard: React.FC<GurmukhiCardProps> = ({
                 )}
               />
             )}
+            <span className="text-sm px-2 font-medium text-gray-600 dark:text-gray-300 transition-opacity duration-300">
+              {transliteration}
+            </span>
           </div>
         </div>
       </button>
-
-      {/* Info button */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          setShowInfo(!showInfo);
-        }}
-        className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-      >
-        <Info className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-      </button>
-
-      {/* Info overlay */}
-      {showInfo && (
-        <div
-          className="absolute inset-0 bg-black/80 text-white p-4 flex items-center justify-center text-center"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowInfo(false);
-          }}
-        >
-          {description}
-        </div>
-      )}
     </div>
   );
 };
